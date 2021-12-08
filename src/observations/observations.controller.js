@@ -29,8 +29,8 @@ function hasLongitude(req, res, next) {
 }
 
 function hasValidAirTemperature(req, res, next) {
-    const airTemperature = Number(req.body.data.airTemperature)
-    const airTemperatureUnit = req.body.data.airTemperatureUnit
+    const airTemperature = Number(req.body.data.air_temperature)
+    const airTemperatureUnit = req.body.data.air_temperature_unit
     
     if (airTemperatureUnit === "C" && airTemperature >= -50 && airTemperature <= 107) {
        return next()
@@ -70,6 +70,6 @@ async function list(req, res) {
     }
 
 module.exports = {
-  create: [hasData, hasLatitude, hasLongitude, hasSkyCondition, asyncErrorBoundary(create)],
+  create: [hasData, hasLatitude, hasLongitude, hasSkyCondition, hasValidAirTemperature, asyncErrorBoundary(create)],
   list: asyncErrorBoundary(list),
 };
